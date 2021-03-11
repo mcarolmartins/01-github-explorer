@@ -1,5 +1,6 @@
-import './styles/global.css';
+import { RepositoryList } from './components/RepositoyList';
+import './styles/global.scss';
 
 export function App() {
-  return <h1>!!!</h1>
+  return <RepositoryList/>
 }
