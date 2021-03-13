@@ -1,19 +1,28 @@
+import { useState, useEffect } from "react";
 import { RepositoryItem } from "./RepositoryItem";
 
-const repository = {
-  name: 'unform',
-  description: 'description',
-  link: 'https://github.com/mcarolmartins/nlw-4-node'
-}
+import '../styles/repositories.scss';
 
 export function RepositoryList() {
+  const [ repositories, setRepositories ] = useState([]);
+
+  //se passar a dependência do useEffect vazia, ele será executado
+  //apenas uma única vez, assim que ele é carregado.
+  useEffect(() => {
+    fetch('https://api.github.com/users/mcarolmartins/repos')
+    .then(response => response.json())
+    .then(data => setRepositories(data));
+  }, []);
+
   return (
     <section className="repository-list">
       <h1>Lista de repositórios</h1>
+
       <ul>
-        <RepositoryItem repository={repository}/>
-        <RepositoryItem repository={repository}/>
-        <RepositoryItem repository={repository}/>
+        {repositories.map(repository => {
+          return <RepositoryItem key={repository.name} repository={repository}/>
+        })}
+
       </ul>
 
     </section>
